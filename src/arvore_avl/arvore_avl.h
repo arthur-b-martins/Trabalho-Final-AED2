@@ -7,7 +7,7 @@ typedef struct No_AVL {
     InfoPalavra info;           
     struct No_AVL* esq;         
     struct No_AVL* dir;         
-    int fator_balanceamento;    // (hE - hD)
+    int fator_balanceamento; // (hE - hD)
 } No_AVL;
 
 typedef No_AVL* ArvoreAVL;

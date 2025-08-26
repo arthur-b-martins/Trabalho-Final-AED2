@@ -90,3 +90,19 @@ InfoPalavra* buscar_bst(ArvoreBST raiz, char* palavra) {
         return buscar_bst(raiz->dir, palavra);
     }
 }
+
+void carregar_dados_na_bst(ArvoreBST* p_raiz, MusicaProcessada* dados_musica) {
+    for (int i = 0; i < dados_musica->tamanho; i++) {
+        TempPalavra palavra_temp = dados_musica->palavras[i];
+        
+        InfoPalavra nova_info;
+        strcpy(nova_info.palavra, palavra_temp.palavra);
+        strcpy(nova_info.nome_musica, dados_musica->nome_musica);
+        strcpy(nova_info.nome_compositor, dados_musica->nome_compositor);
+        strcpy(nova_info.estrofe, palavra_temp.estrofe_primeira_ocorrencia);
+        nova_info.frequencia_na_musica = palavra_temp.freq_na_musica;
+        nova_info.frequencia_total = palavra_temp.freq_na_musica;
+
+        inserir_bst(p_raiz, nova_info);
+    }
+}

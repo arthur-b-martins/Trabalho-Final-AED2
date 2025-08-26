@@ -17,5 +17,6 @@ ArvoreAVL criar_arvore_avl();
 void liberar_arvore_avl(ArvoreAVL raiz);
 int inserir_avl(ArvoreAVL* raiz, InfoPalavra info, int* cresceu);
 InfoPalavra* buscar_avl(ArvoreAVL raiz, char* palavra);
+void carregar_dados_na_avl(ArvoreAVL* p_raiz, MusicaProcessada* dados_musica);
 
 #endif 

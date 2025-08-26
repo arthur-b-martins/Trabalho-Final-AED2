@@ -18,5 +18,6 @@ ArvoreBST criar_arvore_bst();
 void liberar_arvore_bst(ArvoreBST raiz);
 int inserir_bst(ArvoreBST* raiz, InfoPalavra info);
 InfoPalavra* buscar_bst(ArvoreBST raiz, char* palavra);
+void carregar_dados_na_bst(ArvoreBST* p_raiz, MusicaProcessada* dados_musica);
 
 #endif

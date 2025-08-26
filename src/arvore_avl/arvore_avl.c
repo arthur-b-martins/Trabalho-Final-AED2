@@ -16,12 +16,12 @@ void liberar_arvore_avl(ArvoreAVL raiz){
 }
 
 static void rotacao_simples_direita(ArvoreAVL* raiz) {
-    No_AVL* p = (*raiz)->esq;
-    (*raiz)->esq = p->dir;
-    p->dir = *raiz;
+    No_AVL* nova_raiz = (*raiz)->esq;
+    (*raiz)->esq = nova_raiz->dir;
+    nova_raiz->dir = *raiz;
     (*raiz)->fator_balanceamento = 0; 
-    p->fator_balanceamento = 0;
-    *raiz = p;
+    nova_raiz->fator_balanceamento = 0;
+    *raiz = nova_raiz;
 }
 
 static void rotacao_simples_esquerda(ArvoreAVL* raiz) {
@@ -170,5 +170,22 @@ int inserir_avl(ArvoreAVL* raiz, InfoPalavra info, int* cresceu) {
     }
 
     return 0; // Algo deu errado
+}
+
+void carregar_dados_na_avl(ArvoreAVL* p_raiz, MusicaProcessada* dados_musica) {
+    for (int i = 0; i < dados_musica->tamanho; i++) {
+        TempPalavra palavra_temp = dados_musica->palavras[i];
+        
+        InfoPalavra nova_info;
+        strcpy(nova_info.palavra, palavra_temp.palavra);
+        strcpy(nova_info.nome_musica, dados_musica->nome_musica);
+        strcpy(nova_info.nome_compositor, dados_musica->nome_compositor);
+        strcpy(nova_info.estrofe, palavra_temp.estrofe_primeira_ocorrencia);
+        nova_info.frequencia_na_musica = palavra_temp.freq_na_musica;
+        nova_info.frequencia_total = palavra_temp.freq_na_musica;
+
+        int cresceu = 0; // Variável de controle para a inserção na AVL
+        inserir_avl(p_raiz, nova_info, &cresceu);
+    }
 }
 

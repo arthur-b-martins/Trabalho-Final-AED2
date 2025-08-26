@@ -8,6 +8,7 @@ Vou comentar aqui coisas que não podemos nos esquecer!!!
 # Coisas a fazer:
 
  - Generalizar muitas coisas kkkk
+ - trocar o jeito de limpar o buffer para o do trabalho passado 
 
 # Caso a professora pergunte sobre a minha parte:
 

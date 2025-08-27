@@ -9,6 +9,7 @@ Vou comentar aqui coisas que não podemos nos esquecer!!!
 
  - Generalizar muitas coisas kkkk
  - trocar o jeito de limpar o buffer para o do trabalho passado 
+ - confirmar se a unidade de medida do tempo é em milissegundos 
 
 # Caso a professora pergunte sobre a minha parte:
 

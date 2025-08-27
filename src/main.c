@@ -109,22 +109,22 @@ void processar_carregamento_de_arquivo(InfoPalavra** p_vetor, int* p_tamanho_vet
     inicio = clock();
     // carregar_dados_no_vetor(p_vetor, p_tamanho_vetor, &dados_musica);
     fim = clock();
-    tempo_gasto = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-    printf("[VETOR] Tempo de carregamento: %f segundos\n", tempo_gasto);
+    tempo_gasto = ((double)(fim - inicio));
+    printf("VETOR - Tempo de carregamento: %f\n", tempo_gasto);
 
     // --- BST ---
     inicio = clock();
     carregar_dados_na_bst(p_raiz_bst, &dados_musica);
     fim = clock();
-    tempo_gasto = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-    printf("[BST]   Tempo de carregamento: %f segundos\n", tempo_gasto);
+    tempo_gasto = ((double)(fim - inicio));
+    printf("BST - Tempo de carregamento: %f\n", tempo_gasto);
     
     // --- AVL ---
     inicio = clock();
     carregar_dados_na_avl(p_raiz_avl, &dados_musica);
     fim = clock();
-    tempo_gasto = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-    printf("[AVL]   Tempo de carregamento: %f segundos\n", tempo_gasto);
+    tempo_gasto = ((double)(fim - inicio));
+    printf("AVL - Tempo de carregamento: %f\n", tempo_gasto);
 
     
     free(dados_musica.palavras);
@@ -133,15 +133,51 @@ void processar_carregamento_de_arquivo(InfoPalavra** p_vetor, int* p_tamanho_vet
 
 // Processa o item B do projeto: buscar uma palavra nas 3 estruturas
 void processar_busca_de_palavra(InfoPalavra* vetor, int tamanho_vetor, ArvoreBST raiz_bst, ArvoreAVL raiz_avl) {
-    printf("\n[TAREFA 2: BUSCAR PALAVRA]\n");
-    // ALUNO: Implementar esta função.
-    // 1. Pedir ao usuário a palavra que deseja buscar.
-    // 2. Medir o tempo da busca em cada uma das 3 estruturas.
-    //    - Chamar busca_binaria() para o vetor.
-    //    - Chamar buscar_bst() para a BST.
-    //    - Chamar buscar_avl() para a AVL.
-    // 3. Para cada estrutura, imprimir o tempo de busca e o resultado encontrado usando a função 'imprimir_resultado()'.
-    printf(">> Funcionalidade ainda não implementada.\n");
+    char palavra_a_ser_buscada[50];
+    printf("\nDigite a palavra que deseja buscar: ");
+    scanf("%49s", palavra_a_ser_buscada);
+    getchar(); 
+
+    string_para_minusculo(palavra_a_ser_buscada);
+
+    printf("\n--- Realizando busca pela palavra '%s' ---\n\n", palavra_a_ser_buscada);
+
+    InfoPalavra* resultado_encontrado = NULL;
+    clock_t inicio, fim;
+    double tempo_gasto;
+
+  
+    printf("--- Vetor Ordenado ---\n");
+    inicio = clock();
+    int indice_vetor = busca_binaria(vetor, tamanho_vetor, palavra_a_ser_buscada);
+    fim = clock();
+    tempo_gasto = ((double)(fim - inicio));
+    printf("Tempo de busca: %f\n", tempo_gasto);
+
+    if (indice_vetor != -1) {
+        // A busca no vetor retorna um índice, então passamos o endereço do elemento.
+        imprimir_resultado(&vetor[indice_vetor]);
+    } else {
+        printf("Palavra não encontrada.\n");
+    }
+
+  
+    printf("\n--- Árvore BST ---\n");
+    inicio = clock();
+    resultado_encontrado = buscar_bst(raiz_bst, palavra_a_ser_buscada);
+    fim = clock();
+    tempo_gasto = ((double)(fim - inicio));
+    printf("Tempo de busca: %f\n", tempo_gasto);
+    imprimir_resultado(resultado_encontrado); // A função já trata o caso NULL.
+
+
+    printf("\n--- Árvore AVL ---\n");
+    inicio = clock();
+    resultado_encontrado = buscar_avl(raiz_avl, palavra_a_ser_buscada);
+    fim = clock();
+    tempo_gasto = ((double)(fim - inicio));
+    printf("Tempo de busca: %f\n", tempo_gasto);
+    imprimir_resultado(resultado_encontrado);
 }
 
 // Processa o item C do projeto: buscar por frequência

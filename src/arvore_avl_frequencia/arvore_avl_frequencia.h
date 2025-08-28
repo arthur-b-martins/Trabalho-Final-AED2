@@ -9,7 +9,6 @@ typedef struct ListaPalavras {
     struct ListaPalavras* prox;
 } ListaPalavras;
 
-// Nó da Árvore AVL de Frequências
 typedef struct No_AVL_Freq {
     int frequencia;             
     ListaPalavras* palavras;      

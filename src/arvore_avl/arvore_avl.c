@@ -15,7 +15,7 @@ void liberar_arvore_avl(ArvoreAVL raiz){
     }
 }
 
-static void rotacao_simples_direita(ArvoreAVL* raiz) {
+void rotacao_simples_direita(ArvoreAVL* raiz) {
     No_AVL* nova_raiz = (*raiz)->esq;
     (*raiz)->esq = nova_raiz->dir;
     nova_raiz->dir = *raiz;
@@ -24,17 +24,17 @@ static void rotacao_simples_direita(ArvoreAVL* raiz) {
     *raiz = nova_raiz;
 }
 
-static void rotacao_simples_esquerda(ArvoreAVL* raiz) {
-    No_AVL* p = (*raiz)->dir;
-    (*raiz)->dir = p->esq;
-    p->esq = *raiz;
+void rotacao_simples_esquerda(ArvoreAVL* raiz) {
+    No_AVL* nova_raiz = (*raiz)->dir;
+    (*raiz)->dir = nova_raiz->esq;
+    nova_raiz->esq = *raiz;
     (*raiz)->fator_balanceamento = 0;
-    p->fator_balanceamento = 0;
-    *raiz = p;
+    nova_raiz->fator_balanceamento = 0;
+    *raiz = nova_raiz;
 }
 
 // Rotação para desbalanceamento Esquerda-Direita (ED)
-static void rotacao_dupla_direita(ArvoreAVL* raiz) {
+void rotacao_dupla_direita(ArvoreAVL* raiz) {
     No_AVL* u = (*raiz)->esq;
     No_AVL* v = u->dir;
 
@@ -59,7 +59,7 @@ static void rotacao_dupla_direita(ArvoreAVL* raiz) {
 }
 
 // Rotação para desbalanceamento Direita-Esquerda (DE)
-static void rotacao_dupla_esquerda(ArvoreAVL* raiz) {
+void rotacao_dupla_esquerda(ArvoreAVL* raiz) {
     No_AVL* u = (*raiz)->dir;
     No_AVL* v = u->esq;
 

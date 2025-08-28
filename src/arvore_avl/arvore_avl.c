@@ -15,6 +15,26 @@ void liberar_arvore_avl(ArvoreAVL raiz){
     }
 }
 
+InfoPalavra* buscar_avl(ArvoreAVL raiz, char* palavra) {
+    if (raiz == NULL) {
+        return NULL;
+    }
+
+    int comp = strcmp(palavra, raiz->info.palavra);
+
+    if (comp == 0) {
+        return &(raiz->info);
+    }
+    else if (comp < 0) {
+        return buscar_avl(raiz->esq, palavra);
+    }
+    else {
+        return buscar_avl(raiz->dir, palavra);
+    }
+}
+
+// funções de inserção 
+
 void rotacao_simples_direita(ArvoreAVL* raiz) {
     No_AVL* nova_raiz = (*raiz)->esq;
     (*raiz)->esq = nova_raiz->dir;
@@ -130,7 +150,7 @@ int inserir_avl(ArvoreAVL* raiz, InfoPalavra info, int* cresceu) {
                         (*raiz)->fator_balanceamento = 1;
                         *cresceu = 1;
                         break;
-                    case 1: // Já pendia para a esquerda, agora desbalanceou! (+2)
+                    case 1: // Já pendia para a esquerda, agora desbalanceou
                         if ((*raiz)->esq->fator_balanceamento == 1) // Caso Esquerda-Esquerda
                             rotacao_simples_direita(raiz);
                         else // Caso Esquerda-Direita

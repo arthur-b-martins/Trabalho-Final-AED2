@@ -1,5 +1,7 @@
 #include "arvore_avl_frequencia.h"
 #include <stdlib.h>
+#include <string.h>
+#include "Tipos.h"
 
 ArvoreAVL_Freq criar_arvore_avl_freq(){
     return NULL;

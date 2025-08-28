@@ -17,7 +17,7 @@ void liberar_arvore_bst(ArvoreBST raiz) {
 }
 
 int inserir_bst(ArvoreBST* raiz, InfoPalavra info) {
-    // CASO BASE: A árvore (ou sub-árvore) está vazia (*raiz é NULL).
+    // CASO BASE: árvore vazia .
     if (*raiz == NULL) {
         No_BST* novo_no = (No_BST*) malloc(sizeof(No_BST));
         
@@ -69,23 +69,18 @@ int inserir_bst(ArvoreBST* raiz, InfoPalavra info) {
 }
 
 InfoPalavra* buscar_bst(ArvoreBST raiz, char* palavra) {
-    // CASO BASE 1: A árvore (ou sub-árvore) é nula.
     if (raiz == NULL) {
-        return NULL; // palavra não encontrada.
+        return NULL;
     }
 
-    // COMPARAÇÃO: Compara a palavra buscada com a palavra na raiz da sub-árvore atual.
     int comp = strcmp(palavra, raiz->info.palavra);
 
-    // CASO BASE 2: Palavra encontrada (comp == 0).
     if (comp == 0) {
         return &(raiz->info);
     }
-    // CASO RECURSIVO 1: A palavra buscada é menor que a do nó atual.
     else if (comp < 0) {
         return buscar_bst(raiz->esq, palavra);
     }
-    // CASO RECURSIVO 2: A palavra buscada é maior que a do nó atual.
     else {
         return buscar_bst(raiz->dir, palavra);
     }

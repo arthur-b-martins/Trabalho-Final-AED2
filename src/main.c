@@ -8,6 +8,7 @@
 #include "vetor_binario/vetor_binario.h"
 #include "arvore_bst/arvore_bst.h"
 #include "arvore_avl/arvore_avl.h"
+#include "arvore_avl_frequencia/arvore_avl_frequencia.h"
 
 void exibir_menu();
 void imprimir_resultado(InfoPalavra* info);
@@ -56,6 +57,14 @@ int main() {
     return 0;
 }
 
+
+
+
+
+
+
+
+
 void exibir_menu() {
     printf("\n--------------------------------------\n");
     printf("    Repositório de Músicas - AED2\n");
@@ -103,23 +112,23 @@ void processar_carregamento_de_arquivo(InfoPalavra** p_vetor, int* p_tamanho_vet
     clock_t inicio, fim;
     double tempo_gasto;
 
-    // PASSO 2: Medir o tempo de carregamento para cada estrutura.
+    // Medir o tempo de carregamento para cada estrutura
     
-    // --- VETOR ---
+    // VETOR ---
     inicio = clock();
-    // carregar_dados_no_vetor(p_vetor, p_tamanho_vetor, &dados_musica);
+    carregar_dados_no_vetor(p_vetor, p_tamanho_vetor, &dados_musica);
     fim = clock();
     tempo_gasto = ((double)(fim - inicio));
     printf("VETOR - Tempo de carregamento: %f\n", tempo_gasto);
 
-    // --- BST ---
+    // BST ---
     inicio = clock();
     carregar_dados_na_bst(p_raiz_bst, &dados_musica);
     fim = clock();
     tempo_gasto = ((double)(fim - inicio));
     printf("BST - Tempo de carregamento: %f\n", tempo_gasto);
     
-    // --- AVL ---
+    // AVL ---
     inicio = clock();
     carregar_dados_na_avl(p_raiz_avl, &dados_musica);
     fim = clock();
@@ -168,7 +177,7 @@ void processar_busca_de_palavra(InfoPalavra* vetor, int tamanho_vetor, ArvoreBST
     fim = clock();
     tempo_gasto = ((double)(fim - inicio));
     printf("Tempo de busca: %f\n", tempo_gasto);
-    imprimir_resultado(resultado_encontrado); // A função já trata o caso NULL.
+    imprimir_resultado(resultado_encontrado); 
 
 
     printf("\n--- Árvore AVL ---\n");
@@ -180,16 +189,55 @@ void processar_busca_de_palavra(InfoPalavra* vetor, int tamanho_vetor, ArvoreBST
     imprimir_resultado(resultado_encontrado);
 }
 
-// Processa o item C do projeto: buscar por frequência
 void processar_busca_por_frequencia(InfoPalavra* vetor, int tamanho_vetor) {
-    printf("\n[TAREFA 3: BUSCAR POR FREQUÊNCIA]\n");
-    // ALUNO: Implementar esta função (etapa mais avançada).
-    // 1. Criar uma nova árvore AVL (ArvoreAVL_Freq).
-    // 2. Iterar sobre o vetor de InfoPalavra e inserir cada elemento na nova árvore,
-    //    mas usando 'frequencia_total' como chave de comparação.
-    // 3. Pedir ao usuário a frequência desejada.
-    // 4. Realizar a busca por frequência na nova árvore e exibir os resultados.
-    // 5. Liberar a memória da ArvoreAVL_Freq no final.
-    printf(">> Funcionalidade ainda não implementada.\n");
+    printf("\nBuscar por frequência: \n");
+
+    if (vetor == NULL || tamanho_vetor == 0) {
+        printf("Nenhum dado carregado. Por favor, carregue um arquivo primeiro (opção 1).\n");
+        return;
+    }
+
+    // uma nova árvore AVL para as frequencias 
+    ArvoreAVL_Freq arvore_frequencia = criar_arvore_avl_freq();
+
+    // Iterar sobre o vetor e popular a nova árvore
+    printf("Construindo índice de frequências...\n");
+    clock_t inicio_build, fim_build;
+    inicio_build = clock();
+
+    for (int i = 0; i < tamanho_vetor; i++) {
+        int cresceu = 0; 
+        inserir_avl_freq(&arvore_frequencia, &vetor[i], &cresceu);
+    }
+
+    fim_build = clock();
+    double tempo_build = ((double)(fim_build - inicio_build)) / CLOCKS_PER_SEC;
+    printf("Índice de frequências construído em %f segundos.\n", tempo_build);
+
+    // Pedir ao usuário a frequência desejada.
+    int freq_desejada;
+    printf("\nDigite a frequência total que deseja buscar: ");
+    scanf("%d", &freq_desejada);
+    getchar(); 
+
+    // Realizar a busca por frequência 
+    printf("Buscando por palavras com frequência exata de %d...\n", freq_desejada);
+    No_AVL_Freq* no_resultado = buscar_avl_freq(arvore_frequencia, freq_desejada);
+
+    if (no_resultado != NULL) {
+        printf("Palavras encontradas:\n");
+        ListaPalavras* atual = no_resultado->palavras;
+        int contador = 0;
+        while (atual != NULL) {
+            printf(" - %s\n", atual->palavra);
+            atual = atual->prox;
+            contador++;
+        }
+        printf("(Total: %d palavras com esta frequência)\n", contador);
+    } else {
+        printf("Nenhuma palavra foi encontrada com essa frequência no repositório.\n");
+    }
+
+    liberar_arvore_avl_freq(arvore_frequencia);
 }
 
